@@ -137,7 +137,7 @@ function DashboardHome() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
           <h3 className="text-zinc-400 text-sm font-medium uppercase tracking-wider mb-2">Today's Revenue</h3>
-          <p className="text-3xl font-bold text-amber-400">$1,240.50</p>
+          <p className="text-3xl font-bold text-amber-400">J$1,240.50</p>
         </div>
         <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl">
           <h3 className="text-zinc-400 text-sm font-medium uppercase tracking-wider mb-2">Active Orders</h3>
@@ -189,7 +189,7 @@ function OrdersAdmin() {
                     <div className="text-xs text-zinc-500">{new Date(o.created_at).toLocaleString()}</div>
                   </td>
                   <td className="px-6 py-4 text-sm text-zinc-400 capitalize">{o.type}</td>
-                  <td className="px-6 py-4 text-sm text-white font-bold">${o.final_amount.toFixed(2)}</td>
+                  <td className="px-6 py-4 text-sm text-white font-bold">J${o.final_amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
                   <td className="px-6 py-4 text-right text-zinc-500">
                     {expanded === o.id ? <ChevronUp className="w-5 h-5 inline-block" /> : <ChevronDown className="w-5 h-5 inline-block" />}
                   </td>
@@ -215,17 +215,17 @@ function OrdersAdmin() {
                                   <span className={`flex-1 ${item.item_name.includes('DELIVERY') || item.item_name.includes('PICKUP') ? 'text-amber-400 font-bold' : item.item_name.includes('↳') ? 'text-zinc-500' : 'text-zinc-300'}`}>
                                     {item.quantity > 1 ? `${item.quantity}x ` : ''}{item.item_name}
                                   </span>
-                                  <span className="text-zinc-400 ml-4">${item.price.toFixed(2)}</span>
+                                  <span className="text-zinc-400 ml-4">J${item.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
                                 </li>
                               ))}
                             </ul>
                             <div className="mt-4 pt-3 border-t border-zinc-800 flex justify-between text-sm">
                               <span className="text-zinc-500">Discount Applied</span>
-                              <span className="text-amber-400">-${o.discount_amount.toFixed(2)}</span>
+                              <span className="text-amber-400">-J${o.discount_amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
                             </div>
                             <div className="mt-1 flex justify-between text-base font-bold text-white">
                               <span>Final Total</span>
-                              <span>${o.final_amount.toFixed(2)}</span>
+                              <span>J${o.final_amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
                             </div>
                           </div>
                         </div>
@@ -336,7 +336,7 @@ function MenuAdmin() {
                   </div>
                 </td>
                 <td className="px-6 py-4 text-sm text-zinc-400">{item.category}</td>
-                <td className="px-6 py-4 text-sm text-zinc-400">${item.price.toFixed(2)}</td>
+                <td className="px-6 py-4 text-sm text-zinc-400">J${item.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
                 <td className="px-6 py-4">
                   <StatusToggle isAvailable={item.is_available} onToggle={() => toggleStatus(item)} />
                 </td>
@@ -364,7 +364,7 @@ function MenuAdmin() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm text-zinc-400 mb-1">Price ($)</label>
+                <label className="block text-sm text-zinc-400 mb-1">Price (J$)</label>
                 <input type="number" step="0.01" value={formData.price} onChange={e => setFormData({...formData, price: parseFloat(e.target.value)})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500" required />
               </div>
               <div>
@@ -484,7 +484,7 @@ function CarWashAdmin() {
                   </div>
                 </td>
                 <td className="px-6 py-4 text-sm text-zinc-400">{item.vehicle_type}</td>
-                <td className="px-6 py-4 text-sm text-zinc-400">${item.price.toFixed(2)}</td>
+                <td className="px-6 py-4 text-sm text-zinc-400">J${item.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
                 <td className="px-6 py-4">
                   <StatusToggle isAvailable={item.is_available} onToggle={() => toggleStatus(item)} />
                 </td>
@@ -512,7 +512,7 @@ function CarWashAdmin() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm text-zinc-400 mb-1">Price ($)</label>
+                <label className="block text-sm text-zinc-400 mb-1">Price (J$)</label>
                 <input type="number" step="0.01" value={formData.price} onChange={e => setFormData({...formData, price: parseFloat(e.target.value)})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500" required />
               </div>
               <div>
@@ -635,7 +635,7 @@ function AddonsAdmin() {
                   </div>
                 </td>
                 <td className="px-6 py-4 text-sm text-zinc-400">{item.vehicle_type}</td>
-                <td className="px-6 py-4 text-sm text-zinc-400">${item.price.toFixed(2)}</td>
+                <td className="px-6 py-4 text-sm text-zinc-400">J${item.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
                 <td className="px-6 py-4 text-sm text-zinc-400">{item.estimated_minutes}m</td>
                 <td className="px-6 py-4">
                   <StatusToggle isAvailable={item.is_available} onToggle={() => toggleStatus(item)} />
@@ -664,7 +664,7 @@ function AddonsAdmin() {
             </div>
             <div className="grid grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm text-zinc-400 mb-1">Price ($)</label>
+                <label className="block text-sm text-zinc-400 mb-1">Price (J$)</label>
                 <input type="number" step="0.01" value={formData.price} onChange={e => setFormData({...formData, price: parseFloat(e.target.value)})} className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500" required />
               </div>
               <div>
