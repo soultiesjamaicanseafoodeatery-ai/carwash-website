@@ -10,7 +10,9 @@ type MenuItem = {
   price: number;
   category: string;
   image_url: string;
+  emoji?: string;
   is_available: boolean;
+  active?: boolean;
 };
 
 export default function Restaurant() {
@@ -37,11 +39,12 @@ export default function Restaurant() {
     }
   };
 
-  const categories = ['All', ...Array.from(new Set(menuItems.map(item => item.category)))];
-  
-  const filteredItems = activeCategory === 'All' 
-    ? menuItems 
-    : menuItems.filter(item => item.category === activeCategory);
+  // Exclude add-on modifiers (category='addon') from the customer menu
+  const visibleItems = menuItems.filter(item => item.category !== 'addon');
+  const categories = ['All', ...Array.from(new Set(visibleItems.map(item => item.category)))];
+  const filteredItems = activeCategory === 'All'
+    ? visibleItems
+    : visibleItems.filter(item => item.category === activeCategory);
 
   return (
     <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
@@ -105,11 +108,11 @@ export default function Restaurant() {
                   
                   <button
                     onClick={() => addToCart({ id: item.id, productId: item.id, name: item.name, price: item.price, quantity: 1, type: 'restaurant' })}
-                    disabled={!item.is_available}
+                    disabled={!(item.active ?? item.is_available ?? true)}
                     className="w-full py-3 bg-zinc-800 hover:bg-amber-500 hover:text-zinc-950 text-white rounded-xl font-medium tracking-wider uppercase transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Plus className="w-4 h-4" />
-                    {item.is_available ? 'Add to Order' : 'Sold Out'}
+                    {(item.active ?? item.is_available ?? true) ? 'Add to Order' : 'Sold Out'}
                   </button>
                 </div>
               </motion.div>
