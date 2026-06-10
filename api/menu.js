@@ -29,6 +29,8 @@ function buildWriteData(body) {
   // If active is explicitly passed, use it; is_available takes precedence
   if (body.active      !== undefined) out.is_available = body.active
   if (body.is_available !== undefined) out.is_available = body.is_available
+  if (body.module      !== undefined) out.module = body.module
+  if (body.route       !== undefined) out.route  = body.route
   return out
 }
 
@@ -38,10 +40,9 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === 'GET') {
-      const { data, error } = await supabase
-        .from('menu_items')
-        .select('*')
-        .order('category', { ascending: true });
+      let query = supabase.from('menu_items').select('*').order('category', { ascending: true });
+      if (req.query.module) query = query.eq('module', req.query.module);
+      const { data, error } = await query;
       if (error) throw error;
       return res.status(200).json((data || []).map(normalizeRow));
     }
